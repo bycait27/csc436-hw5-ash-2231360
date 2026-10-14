@@ -1,0 +1,10 @@
+groups:
+  - name: ticketing-api-alerts
+    rules:
+      - alert: TicketApiHighErrorRate
+        expr: rate(http_requests_total{path=~"/api/tickets.*", status=~"5.."}[2m]) > 0.03
+        for: 1m
+        labels:
+          severity: page
+        annotations:
+          summary: "Ticketing API 5xx error rate exceeds 3%"
