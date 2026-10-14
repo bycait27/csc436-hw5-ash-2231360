@@ -1,0 +1,45 @@
+k6 run -e BASE=https://www.csc436.com `
+>>        -e ASSET=/assets/index-BAWLAnXD.js `
+>>        webapps_week05/samples/campuspulse-load-profile.js
+
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+
+     execution: local
+        script: webapps_week05/samples/campuspulse-load-profile.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 10 max VUs, 3m30s max duration (incl. graceful stop):
+              * default: Up to 10 looping VUs for 3m0s over 3 stages (gracefulRampDown: 30s, gracefulStop: 30s)
+
+
+
+CampusPulse standard load profile — summary
+==========================================
+target            https://www.csc436.com
+duration          180s (30s ramp / 120s hold / 30s ramp-down), peak 10 VUs
+requests          1212
+failed            66.7%
+
+latency (server wait / TTFB)
+  html   p95      56 ms
+  api    p95      178 ms
+  asset  p95      60 ms
+
+edge cache
+  hit ratio       99.5%
+  HIT / STALE     402
+  MISS / EXPIRED  2
+  REVALIDATED     0   (bytes reused, origin contacted)
+  BYPASS/DYNAMIC  808
+  unrecognised    0
+
+
+running (3m03.2s), 00/10 VUs, 202 complete and 0 interrupted iterations
+default ✓ [======================================] 00/10 VUs  3m0s
+ERRO[0183] thresholds on metrics 'http_req_failed' have been crossed 
