@@ -1,0 +1,21 @@
+curl.exe -sS -D - http://localhost:3002/api/tickets | Select-String "X-Cache"
+
+X-Cache: MISS
+
+==============================================================================
+
+curl.exe -sS -D - http://localhost:3002/api/tickets | Select-String "X-Cache"
+
+X-Cache: HIT
+
+==============================================================================
+
+curl.exe -sS -X POST -H "Content-Type: application/json" -d '{"ticket_id":"T-99999","zone":"North","category":"Technology","priority":"High","opened_on":"2026-04-01","closed_on":null,"estimated_hours":2,"summary":"Test cache invalidation"}' http://localhost:3002/api/tickets
+
+{"ticket_id":"T-99999","zone":"North","category":"Technology","priority":"High","opened_on":"2026-04-01","closed_on":null,"estimated_hours":2,"summary":"Test cache invalidation"}
+
+==============================================================================
+
+curl.exe -sS -D - http://localhost:3002/api/tickets | Select-String "X-Cache"
+
+X-Cache: MISS
