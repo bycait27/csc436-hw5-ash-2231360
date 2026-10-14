@@ -1,0 +1,69 @@
+curl.exe -sS -D - -H "Accept-Encoding: identity" -o NUL -w "Size: %{size_download} bytes\n" "https://www.csc436.com/assets/index-BAWLAnXD.js" 
+
+HTTP/1.1 200 OK
+Date: Wed, 14 Oct 2026 00:38:08 GMT
+Content-Type: application/javascript
+Transfer-Encoding: chunked
+Connection: keep-alive
+cache-control: public, max-age=0, s-maxage=300
+etag: W/"b08fc2418da25f9c4c477a36a34915cf"
+last-modified: Tue, 13 Oct 2026 19:27:27 UTC
+rndr-id: 7f09089d-3d75-4747
+Server: cloudflare
+vary: Accept-Encoding
+vary: Accept-Encoding
+x-content-type-options: nosniff
+cf-cache-status: EXPIRED
+CF-RAY: a4a284fbdc2891e4-ATL
+alt-svc: h3=":443"; ma=86400
+
+Size: 324979 bytes
+
+==============================================================================================================================================
+
+curl.exe -sS -D - -H "Accept-Encoding: gzip" -o NUL -w "Size: %{size_download} bytes\n" "https://www.csc436.com/assets/index-BAWLAnXD.js" 
+
+HTTP/1.1 200 OK
+Date: Wed, 14 Oct 2026 00:38:38 GMT
+Content-Type: application/javascript
+Transfer-Encoding: chunked
+Connection: keep-alive
+cache-control: public, max-age=0, s-maxage=300
+Age: 30
+etag: W/"b08fc2418da25f9c4c477a36a34915cf"
+last-modified: Tue, 13 Oct 2026 19:27:27 UTC
+rndr-id: 7f09089d-3d75-4747
+Server: cloudflare
+vary: Accept-Encoding
+vary: Accept-Encoding
+x-content-type-options: nosniff
+cf-cache-status: HIT
+Content-Encoding: gzip
+CF-RAY: a4a285bb5dd1bfb6-ATL
+alt-svc: h3=":443"; ma=86400
+
+Size: 102136 bytes
+
+==============================================================================================================================================
+
+curl.exe -sS -D - -H "Accept-Encoding: br" -o NUL -w "Size: %{size_download} bytes\n" "https://www.csc436.com/assets/index-BAWLAnXD.js" 
+
+HTTP/1.1 200 OK
+Date: Wed, 14 Oct 2026 00:38:58 GMT
+Content-Type: application/javascript
+Transfer-Encoding: chunked
+Connection: keep-alive
+Cache-Control: public, max-age=0, s-maxage=300
+Content-Encoding: br
+etag: "b08fc2418da25f9c4c477a36a34915cf"
+last-modified: Tue, 13 Oct 2026 19:27:27 UTC
+rndr-id: 95736ffb-bc01-4ea8
+Server: cloudflare
+vary: Accept-Encoding
+vary: Accept-Encoding
+x-content-type-options: nosniff
+cf-cache-status: HIT
+CF-RAY: a4a286378f4541ec-EWR
+alt-svc: h3=":443"; ma=86400
+
+Size: 103926 bytes
