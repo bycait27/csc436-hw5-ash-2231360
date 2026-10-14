@@ -1,0 +1,104 @@
+node origin.mjs
+
+origin  listening on http://127.0.0.1:8080
+
+        hashed asset is /assets/app.c4c61eeb.js
+
+
+================================================
+
+$env:CACHE_KEY='conservative'
+
+node edge.mjs
+
+edge    listening on http://127.0.0.1:8788  -> origin 127.0.0.1:8080
+
+        cache key mode: conservative
+
+================================================
+
+curl.exe -sS -D - -H "Cookie: sid=sid-alice" "http://127.0.0.1:8788/account"
+
+HTTP/1.1 200 OK
+
+content-type: text/html; charset=utf-8
+
+cache-control: private, no-store
+
+etag: "1q21K1Xm3YDHXdig6gzh"
+
+last-modified: Wed, 14 Oct 2026 17:30:24 GMT
+
+x-origin-hit: 1
+
+x-served-to: S0198442
+
+vary: Cookie
+
+date: Wed, 14 Oct 2026 17:32:02 GMT
+
+connection: keep-alive
+
+keep-alive: timeout=5
+
+x-cache-status: BYPASS
+
+age: 0
+
+x-cache-key-mode: conservative
+
+content-length: 203
+
+
+
+<!doctype html><html lang="en"><meta charset="utf-8"><title>Account — Alice Nguyen</title>
+
+<h1>Account</h1>
+
+<p>Signed in as <strong>Alice Nguyen</strong> (S0198442)</p>
+
+<p>Meal-plan balance: $41.50</p>
+
+================================================
+
+curl.exe -sS -D - -H "Cookie: sid=sid-bob" "http://127.0.0.1:8788/account"
+
+HTTP/1.1 200 OK
+
+content-type: text/html; charset=utf-8
+
+cache-control: private, no-store
+
+etag: "ye2AgcdRW-uvGa3-HUrA"
+
+last-modified: Wed, 14 Oct 2026 17:30:24 GMT
+
+x-origin-hit: 1
+
+x-served-to: S0207731
+
+vary: Cookie
+
+date: Wed, 14 Oct 2026 17:32:18 GMT
+
+connection: keep-alive
+
+keep-alive: timeout=5
+
+x-cache-status: BYPASS
+
+age: 0
+
+x-cache-key-mode: conservative
+
+content-length: 196
+
+
+
+<!doctype html><html lang="en"><meta charset="utf-8"><title>Account — Bob Ortiz</title>
+
+<h1>Account</h1>
+
+<p>Signed in as <strong>Bob Ortiz</strong> (S0207731)</p>
+
+<p>Meal-plan balance: $0.00</p> 

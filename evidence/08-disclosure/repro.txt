@@ -1,0 +1,129 @@
+================================================
+BASELINE
+================================================
+
+node origin.mjs    
+
+origin  listening on http://127.0.0.1:8080
+        hashed asset is /assets/app.c4c61eeb.js
+
+================================================
+
+node edge.mjs
+
+edge    listening on http://127.0.0.1:8788  -> origin 127.0.0.1:8080
+        cache key mode: conservative
+
+================================================
+
+curl.exe -sS -D - -H "Cookie: sid=sid-alice" "http://127.0.0.1:8788/account" | Select-String -Pattern "x-cache-status|x-served-to|Signed in"
+
+x-served-to: S0198442
+x-cache-status: BYPASS
+<p>Signed in as <strong>Alice Nguyen</strong> (S0198442)</p>
+
+================================================
+
+curl.exe -sS -D - -H "Cookie: sid=sid-bob"   "http://127.0.0.1:8788/account" | Select-String -Pattern "x-cache-status|x-served-to|Signed in"
+
+x-served-to: S0207731
+x-cache-status: BYPASS
+<p>Signed in as <strong>Bob Ortiz</strong> (S0207731)</p>
+
+================================================
+Mistake 1
+================================================
+
+$env:LEAK=1; node origin.mjs
+
+origin  listening on http://127.0.0.1:8080
+        hashed asset is /assets/app.c4c61eeb.js
+        LEAK=1  /account is public, max-age=60, no Vary  <-- BAD DEPLOY
+
+================================================
+
+node edge.mjs
+
+edge    listening on http://127.0.0.1:8788  -> origin 127.0.0.1:8080
+        cache key mode: conservative
+
+================================================
+
+curl.exe -sS -D - -H "Cookie: sid=sid-alice" "http://127.0.0.1:8788/account" | Select-String -Pattern "x-cache-status|x-served-to|Signed in"
+
+x-served-to: S0198442
+x-cache-status: MISS
+<p>Signed in as <strong>Alice Nguyen</strong> (S0198442)</p>
+
+================================================
+
+curl.exe -sS -D - -H "Cookie: sid=sid-bob"   "http://127.0.0.1:8788/account" | Select-String -Pattern "x-cache-status|x-served-to|Signed in"
+
+x-served-to: S0207731
+x-cache-status: MISS
+<p>Signed in as <strong>Bob Ortiz</strong> (S0207731)</p>
+
+================================================
+Mistake 2
+================================================
+
+$env:LEAK=1; node origin.mjs
+
+origin  listening on http://127.0.0.1:8080
+        hashed asset is /assets/app.c4c61eeb.js
+        LEAK=1  /account is public, max-age=60, no Vary  <-- BAD DEPLOY
+
+================================================
+
+$env:CACHE_KEY='vary-only'; node edge.mjs
+
+edge    listening on http://127.0.0.1:8788  -> origin 127.0.0.1:8080
+        cache key mode: vary-only
+
+================================================
+
+curl.exe -sS -D - -H "Cookie: sid=sid-alice" "http://127.0.0.1:8788/account"
+
+HTTP/1.1 200 OK
+content-type: text/html; charset=utf-8
+cache-control: public, max-age=60
+etag: "1q21K1Xm3YDHXdig6gzh"
+last-modified: Wed, 14 Oct 2026 03:14:41 GMT
+x-origin-hit: 1
+x-served-to: S0198442
+date: Wed, 14 Oct 2026 03:18:59 GMT
+connection: keep-alive
+keep-alive: timeout=5
+x-cache-status: HIT
+age: 56
+x-cache-key-mode: vary-only
+content-length: 203
+
+<!doctype html><html lang="en"><meta charset="utf-8"><title>Account — Alice Nguyen</title>
+<h1>Account</h1>
+<p>Signed in as <strong>Alice Nguyen</strong> (S0198442)</p>
+<p>Meal-plan balance: $41.50</p>
+
+================================================
+
+curl.exe -sS -D - -H "Cookie: sid=sid-bob" "http://127.0.0.1:8788/account"
+
+HTTP/1.1 200 OK
+content-type: text/html; charset=utf-8
+cache-control: public, max-age=60
+etag: "ye2AgcdRW-uvGa3-HUrA"
+last-modified: Wed, 14 Oct 2026 03:14:41 GMT
+x-origin-hit: 1
+x-served-to: S0207731
+date: Wed, 14 Oct 2026 03:20:01 GMT
+connection: keep-alive
+keep-alive: timeout=5
+x-cache-status: EXPIRED
+age: 0
+x-cache-key-mode: vary-only
+content-length: 196
+
+<!doctype html><html lang="en"><meta charset="utf-8"><title>Account — Bob Ortiz</title>
+<h1>Account</h1>
+<p>Signed in as <strong>Bob Ortiz</strong> (S0207731)</p>
+<p>Meal-plan balance: $0.00</p>
