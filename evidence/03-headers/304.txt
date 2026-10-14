@@ -1,0 +1,25 @@
+curl.exe -sS -D - "https://www.csc436.com/" | Select-String "etag"
+
+etag: W/"5b30448f567dbf5fddffb7c8dc4082a7"
+
+=====================================================================================================
+
+Get-Date -UFormat "%Y-%m-%d %H:%M:%S UTC"
+>> curl.exe -sS -D - -H 'If-None-Match: "5b30448f567dbf5fddffb7c8dc4082a7"' "https://www.csc436.com/" 
+
+2026-10-13 19:13:49 UTC
+HTTP/1.1 304 Not Modified
+Date: Wed, 14 Oct 2026 00:13:50 GMT
+Connection: keep-alive
+cache-control: public, max-age=0, s-maxage=300
+x-content-type-options: nosniff
+vary: Accept-Encoding
+vary: Accept-Encoding
+Age: 45
+etag: "5b30448f567dbf5fddffb7c8dc4082a7"
+last-modified: Tue, 13 Oct 2026 19:27:27 UTC
+rndr-id: 1101f25d-bec7-47ae
+Server: cloudflare
+cf-cache-status: HIT
+CF-RAY: a4a26164cf8babef-ATL
+alt-svc: h3=":443"; ma=86400

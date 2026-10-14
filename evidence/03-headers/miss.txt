@@ -1,0 +1,22 @@
+Get-Date -UFormat "%Y-%m-%d %H:%M:%S UTC"
+>> curl.exe -sS -D - -o NUL -w "\nttfb=%{time_starttransfer}s total=%{time_total}s\n" "https://www.csc436.com/?cb=test1"
+
+2026-10-13 19:11:55 UTC
+HTTP/1.1 200 OK
+Date: Wed, 14 Oct 2026 00:11:56 GMT
+Content-Type: text/html; charset=utf-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+Cache-Control: public, max-age=0, s-maxage=300
+cf-cache-status: MISS
+etag: W/"5b30448f567dbf5fddffb7c8dc4082a7"
+last-modified: Tue, 13 Oct 2026 19:27:27 UTC
+rndr-id: 1661b7d0-1bc9-4a1b
+Server: cloudflare
+vary: Accept-Encoding
+vary: Accept-Encoding
+x-content-type-options: nosniff
+CF-RAY: a4a25e9c1eaea6f4-ATL
+alt-svc: h3=":443"; ma=86400
+
+ttfb=0.265107s total=0.265419s
